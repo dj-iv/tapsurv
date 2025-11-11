@@ -199,7 +199,11 @@
                 <div class="relative">
                     <div class="absolute inset-0 bg-gradient-to-r from-primary to-accent rounded-3xl blur-3xl opacity-20"></div>
                     <div class="relative bg-white rounded-3xl shadow-2xl p-3 border-8 border-gray-100">
-                        <img src="images/mainscreen.png" alt="TapSurv App Interface" class="rounded-2xl w-full">
+                        <video poster="images/mainscreen.png" muted playsinline autoplay loop preload="metadata" class="rounded-xl w-full object-cover">
+                           <source src="images/SurveyVideo.mp4" type="video/mp4">
+                           <!-- Fallback image if video is not supported -->
+                           <img src="images/mainscreen.png" alt="TapSurv App Interface">
+                        </video>
                     </div>
                     
                     <!-- Floating Stats Card -->
