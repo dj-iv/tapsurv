@@ -163,3 +163,27 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+
+// Responsive video source selection - choose smaller mobile video when viewport is narrow
+document.addEventListener('DOMContentLoaded', () => {
+    const heroVideo = document.querySelector('video[data-desktop-src]');
+    if (heroVideo) {
+        const mobileSrc = heroVideo.dataset.mobileSrc;
+        const desktopSrc = heroVideo.dataset.desktopSrc;
+        function setVideoSource() {
+            const isMobile = window.innerWidth <= 640; // tune breakpoint
+            const chosen = isMobile && mobileSrc ? mobileSrc : desktopSrc;
+            // change sources if needed
+            const sources = heroVideo.querySelectorAll('source');
+            // replace the mp4/webm sources with the chosen base name when relevant
+            sources.forEach(s => {
+                const type = s.getAttribute('type');
+                if (type === 'video/mp4') s.setAttribute('src', chosen);
+            });
+            // reload video to pick up new source
+            heroVideo.load();
+        }
+        setVideoSource();
+        window.addEventListener('resize', setVideoSource);
+    }
+});

@@ -1,0 +1,12 @@
+{
+  "name": "tapsurv-site",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "compress-video": "node scripts/compress-video.js"
+  },
+  "devDependencies": {
+    "ffmpeg-static": "^5.1.0",
+    "fluent-ffmpeg": "^2.1.2"
+  }
+}
