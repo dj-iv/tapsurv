@@ -161,6 +161,39 @@ The website references these images (you'll need to add the actual files):
 - `images/mainscreen.png` - 📸 Add your Signal Info screenshot
 - `images/surveyscreen.png` - 📸 Add your Survey heat map screenshot
 
+### Compressing the Hero Video
+
+If you want to compress the raw high-resolution `SurveyVideo.mp4`, the repository includes a helper script that uses ffmpeg to create web-optimized files (`SurveyVideo-small.mp4`, `SurveyVideo-mobile.mp4`, and `SurveyVideo-small.webm`).
+
+1. Install dependencies:
+
+```powershell
+cd site
+npm install
+```
+
+2. Compress the video (this looks for `images/SurveyVideo.mp4` and produces compressed files):
+
+```powershell
+npm run compress-video
+```
+
+3. The compressed files are stored in `images/` and can be used as the hero video in the site. The site already references the compressed `SurveyVideo-small` and `SurveyVideo-mobile` files.
+
+If the environment doesn't have Node or npm available, you can use `ffmpeg` directly with the following suggested commands:
+
+```powershell
+# Desktop optimized H.264
+ffmpeg -i images/SurveyVideo.mp4 -c:v libx264 -crf 28 -preset medium -movflags +faststart -c:a aac -b:a 96k -vf "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease" images/SurveyVideo-small.mp4
+
+# Mobile optimized H.264
+ffmpeg -i images/SurveyVideo.mp4 -c:v libx264 -crf 30 -preset fast -movflags +faststart -c:a aac -b:a 64k -vf "scale=640:-2" images/SurveyVideo-mobile.mp4
+
+# WebM (VP9) for very small size
+ffmpeg -i images/SurveyVideo.mp4 -c:v libvpx-vp9 -b:v 0 -crf 35 -deadline good -c:a libopus -b:a 64k -vf "scale='min(1280,iw)':'min(720,ih)':force_original_aspect_ratio=decrease" images/SurveyVideo-small.webm
+```
+
+
 ## TODO for Launch
 
 - [ ] Add actual app screenshots to images folder
